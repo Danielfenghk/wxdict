@@ -1,0 +1,6 @@
+.show-item {
+  display: flex;
+  flex-direction: row;
+  flex: none;
+ }
+

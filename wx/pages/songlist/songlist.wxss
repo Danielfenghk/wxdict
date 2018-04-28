@@ -1,0 +1,5 @@
+/* pages/songlist/songlist.wxss */
+.flex-wrp {display: flex; margin-left: 10rpx;justify-content: space-between; margin: 40rpx;}
+.bc_white {background: whitesmoke;}
+.bc_grey {background:white;}
+.bc_blue {background: blue;}

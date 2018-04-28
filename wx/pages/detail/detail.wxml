@@ -1,0 +1,19 @@
+ <view class="show-item">
+  <view style="margin: 10px;">title</view>
+    <textarea  style="margin: 10px;" auto-height value="{{item.title}}" />
+</view>
+ <view style=" display: flex;  flex-direction: column;">
+  <view  style="margin: 10px;">content</view>
+    <textarea  style="margin: 10px;" value="{{item.content}}" />
+</view>
+
+ <view class="show-item">
+  <view  style="margin: 10px;">dication 日期</view>
+
+   <textarea  style="margin: 10px;" auto-height  value="{{item.year}}年{{item.month+1}}月{{item.date}}日" />
+  </view>
+
+ <view class="show-item">
+  <view style="margin: 10px;">添加日期</view>
+    <textarea style="margin: 10px;" value="{{item.addDate}}" />
+ </view>

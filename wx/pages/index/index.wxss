@@ -1,0 +1,312 @@
+@import "../../calendar/calendar.wxss";
+.flex-wrp {display: flex; margin-left: 10rpx;justify-content: space-between; margin: 40rpx;}
+.bc_white {background: whitesmoke;}
+.bc_grey {background:white;}
+.bc_blue {background: blue;}
+
+.wrapper {
+  padding-bottom: 160rpx;
+  
+}
+
+	
+
+.show-date {
+  margin: 30rpx 0;
+  text-align: center;
+  font-size: 60rpx;
+  font-weight: lighter;
+  color: #e14848;
+}
+
+.flex {
+	display: flex;
+}
+
+.flex1 {
+	flex: 1;
+}
+
+.progress-wrap {
+		padding: 0 32rpx;
+		height: 30px;
+		line-height: 30px;
+		justify-content: center;
+}
+.begin, .end {
+		width: 100rpx;
+			color: #ccc;
+			font-size: 24rpx;
+		}
+
+  .end {
+			text-align: right;
+		}
+.progress {
+		position: relative;
+			width: 500rpx;
+		}
+  .progress	.progress-bg {
+			position: absolute;
+				left: 50%;
+				top: 50%;
+				margin-top: -2px;
+				margin-left: -250rpx;
+				width: 500rpx;
+				height: 4px;
+				background: #999;
+				border-radius: 4px;
+			}
+	.progress-bar {
+				position: absolute;
+				left: -2rpx;
+				top: 50%;
+				margin-top: -2px;
+				width: 0;
+				height: 4px;
+				background: #eee;
+				border-radius: 4px;
+			
+			}
+		.progress .progress-bar .control {
+					position: absolute;
+					right: -8px;
+					top: -6px;
+					float: right;
+					width: 16px;
+					height: 16px;
+					background: #eee;
+					border-radius: 50%;
+				}
+.common-list .item {
+  overflow: hidden;
+}
+
+.common-list .item:active {
+  background: #333;
+}
+
+.common-list .item .inner {
+  position: relative;
+  border-top: 2rpx solid #333;
+  margin: 0 40rpx;
+  padding: 20rpx 0;
+  min-height: 100rpx;
+}
+
+.common-list .header {
+  border-top: 2rpx solid #333;
+  margin: 0 40rpx;
+  padding: 20rpx 0;
+  color: #aaa;
+  font-size: 30rpx;
+}
+
+.common-list .item .icon {
+  position: absolute;
+  left: 0;
+  top: 20rpx;
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.common-list .item .inner.with-check .checker {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  top: 10rpx;
+  bottom: 10rpx;
+  width: 80rpx;
+  border-right: 2rpx solid #333;
+}
+
+.common-list .item .inner.with-check .icon {
+  left: 100rpx;
+}
+
+.common-list .item .content {
+  margin-left: 130rpx;
+}
+
+.common-list .item .inner.with-check .content {
+  margin-left: 230rpx;
+}
+
+.common-list .item .title {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-weight: lighter;
+  font-size: 32rpx;
+  margin-top: 30rpx;
+}
+
+.mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1100;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 600rpx;
+  min-height: 200rpx;
+  margin-left: -300rpx;
+  margin-top: -200rpx;
+  background-color: #fff;
+  border-radius: 10rpx;
+  z-index: 1200;
+  color: #555;
+}
+
+.modal .content {
+  overflow: hidden;
+  padding: 40rpx;
+  font-size: 38rpx;
+  margin-bottom: 100rpx;
+}
+
+.modal .content .input {
+  padding: 20rpx;
+  font-size: 38rpx;
+  border: 2prx solid #e14848;
+}
+
+.modal .footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 100rpx;
+  border-radius: 0 0 10rpx 10rpx;
+  overflow: hidden;
+}
+
+.modal .footer .btn {
+  height: 100rpx;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36rpx;
+  background-color: #eee;
+  color: #555;
+}
+
+.modal .footer .btn:active {
+  background-color: #ddd;
+}
+
+.modal .level {
+  display: flex;
+  align-items: center;
+  font-size: 32rpx;
+  padding: 20rpx;
+}
+
+.modal .level icon {
+  margin-left: 20rpx;
+}
+
+/*action sheet*/
+
+.actionItem {
+  color: #555;
+  font-size: 36rpx;
+}
+
+.actionItem.cancel {
+  color: #888;
+}
+
+/*update panel style*/
+
+.updatePanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #FFFFFF;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.updatePanel .title {
+  font-size: 48rpx;
+  font-weight: lighter;
+  text-align: center;
+  padding: 20rpx 0;
+  margin-bottom: 20rpx;
+}
+
+.updatePanel input, .updatePanel textarea {
+  background: #FFFFFF;
+  padding: 20rpx;
+  font-size: 36rpx;
+  width: auto;
+  color: #000000;
+}
+
+.updatePanel textarea {
+  border-top: 2rpx solid #333;
+}
+
+.updatePanel .level {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  bottom: 100rpx;
+  border-top: 2rpx solid #333;
+  padding: 20rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.updatePanel .level .item {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  margin: 0 60rpx;
+}
+
+.updatePanel .footer {
+  position: absolute;
+  display: flex;
+  left: 0;
+  height: 100rpx;
+  right: 0;
+  bottom: 0;
+  border-top: 2rpx solid #333;
+}
+
+.updatePanel .footer .btn {
+  flex: 1;
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 36rpx;
+  color:#000000;
+}
+
+.updatePanel .footer .btn:active {
+  background: #00FFFF;
+}
+
+.updatePanel .footer .btn.primary {
+  background: #FFFFFF;
+}
+
+.updatePanel .footer .btn.primary:active {
+  background:#FFFFFF;
+}

@@ -1,0 +1,11 @@
+<!--pages/songlist/songlist.wxml-->
+<view>
+
+<input placeholder="输入mp3网址" value="{{src}}"   bindinput="urlChangeEvent" />
+ <view class="flex-wrp" style="flex-direction:row;">
+ <view class="flex-item bc_white"><button bindtap="clearurl">清除网址</button></view>
+ <view class="flex-item bc_grey" ><button bindtap="playurl">播放选定</button></view>
+
+       
+  </view>
+ </view>
