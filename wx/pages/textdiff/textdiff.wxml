@@ -1,0 +1,21 @@
+
+<import src="../../wxParse/wxParse.wxml"/>
+
+<view>
+
+  <view class="flex-item bc_gre"><button  bindtap="textCompare">比较</button></view>
+<view class="flex-wrp" style="display: flex; flex-direction:row;">
+
+    <textarea placeholder="原文" value="{{originalValue}}" 
+  bindinput="orgChangeEvent"> </textarea>
+
+  <textarea placeholder="输入文" value="{{dictValue}}" bindinput="dictChangeEvent"></textarea>
+
+  </view>
+
+
+<view class="wxParse">
+<template is="wxParse" data="{{wxParseData:wxParseData.nodes}}"/>
+</view>
+
+</view>

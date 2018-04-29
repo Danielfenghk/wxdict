@@ -1,3 +1,4 @@
+@import "wxParse/wxParse.wxss";
 page {
   font-family: 'microsoft yahei ui';
   font-size: 28rpx;

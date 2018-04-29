@@ -171,7 +171,9 @@ Page({
       progressWidth,
       drag: false
     });
+   
     this.currentTime = progressWidth * this.duration / 100 || 0;
+    console.log(this.currentTime);
     backgroundAudioManager.seek(this.currentTime / 1000);
   },
   /**
@@ -191,17 +193,26 @@ Page({
   selectaudio: function () {
     wx.navigateTo({ url: '../songlist/songlist' });
   },
+
+  textCmp: function(){
+    wx.navigateTo({ url: '../textdiff/textdiff?dictv=' + this.data.todoTextAreaValue });
+  },
+
   audioPlay: function () {
     if (this.data.playing) {
       backgroundAudioManager.stop();
       this.setData({
         playing: false,
-        duration: '00:00'
+        currentTime: '00:00'
       });
 
     }
     else {
       if (this.data.src == null) {
+        this.setData({
+          playing: false,
+          currentTime: '00:00'
+        });
         return;
       }
       backgroundAudioManager.src = this.data.src;
@@ -220,11 +231,21 @@ Page({
       this.setData({ playing: false });
     }
     else {
-      if (this.data.src == null) {
-        return;
-      }
+      
       backgroundAudioManager.src = this.data.src;
-      backgroundAudioManager.play();
+     let timeInMilliseconds = (Number(this.data.currentTime.split(':')[0]) * 60 + Number(this.data.currentTime.split(':')[1])) * 1000
+     
+     wx.seekBackgroundAudio({
+       position: timeInMilliseconds/1000,
+       success: function () {
+         backgroundAudioManager.seek(timeInMilliseconds/1000);
+       },
+       fail: function () {
+         backgroundAudioManager.seek(timeInMilliseconds/1000);
+       },
+
+     })
+
       this.setData({
         playing: true
       });
@@ -234,11 +255,11 @@ Page({
   },
 
   audioBP1: function () {
-    this.setData({ bp1: Math.floor(backgroundAudioManager.currentTime) });
+    this.setData({ bp1:backgroundAudioManager.currentTime });
     console.log(this.data.bp1);
   },
   audioBP2: function () {
-    this.setData({ bp2: Math.ceil(backgroundAudioManager.currentTime) });
+    this.setData({ bp2: backgroundAudioManager.currentTime });
     console.log(this.data.bp2);
   },
 
@@ -251,13 +272,22 @@ Page({
       this.setData({ bp1: 0, bp2: 99999 });
       return;
     }
-    backgroundAudioManager.play();
-   backgroundAudioManager.seek(this.data.bp1);
+    const that = this;
+  backgroundAudioManager.src=that.data.src;
+  wx.seekBackgroundAudio({
+      position: that.data.bp1,
+      success: function () { 
+          backgroundAudioManager.seek(that.data.bp1);},
+      fail: function(){
+        backgroundAudioManager.seek(that.data.bp1);
+        },
+      });
+
     this.setData({
       playing: true
     });
-    console.log(this.data.bp1);
-    console.log(this.data.bp2);
+
+
   },
 
   clearRepeat: function () {

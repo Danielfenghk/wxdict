@@ -129,9 +129,10 @@
 
 
 <view class="flex-wrp" style="flex-direction:row;">
+       <view class="flex-item bc_blue"><button type="primary" bindtap="selectaudio">选择</button></view>
     <view class="flex-item bc_grey" ><button bindtap="audioPlay">{{playing? stopPlay :playStop}}</button></view>
      <view class="flex-item bc_white"><button bindtap="audioPause">{{playing? resumePause :pauseResume}}</button></view>
-      <view class="flex-item bc_blue"><button type="primary" bindtap="selectaudio">选择</button></view>
+    <view class="flex-item bc_gre"><button  bindtap="textCmp">比较</button></view>
   
   </view>
   <view class="flex-wrp" style="flex-direction:row;">
