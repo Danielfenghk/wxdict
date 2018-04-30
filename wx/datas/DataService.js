@@ -13,7 +13,6 @@ class DataSerivce {
     this.date = props['date'] || '';
     this.month = props['month'] || '';
     this.year = props['year'] || '';
-    this.level = props['level'] || '';
     this.title = props['title'] || '';
   }
 
@@ -28,7 +27,6 @@ class DataSerivce {
         year: this.year,
         month: this.month,
         date: this.date,
-        level: this.level,
         addDate: new Date().getTime()
       });
     }
@@ -80,7 +78,7 @@ class DataSerivce {
   }
 
   _checkProps() {
-    return this.title && this.level && this.date && this.year && this.month;
+    return this.title &&  this.date && this.year && this.month;
   }
 }
 
