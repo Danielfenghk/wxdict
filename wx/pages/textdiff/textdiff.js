@@ -58,18 +58,16 @@ Page({
 
   textCompare: function(){
       var dmp = new diff_match_patch();
-      var diff = dmp.diff_main(this.data.originalValue, this.data.dictValue);
+      var diff = dmp.diff_main(this.data.dictValue, this.data.originalValue);
       dmp.Diff_EditCost=4;
-    dmp.diff_cleanupEfficiency(diff);
-     //dmp.diff_cleanupSemantic(diff);
-    //this.setData({ originalValue: dmp.diff_prettyHtml(diff) });
-    
-   // console.log(dmp.diff_commonPrefix('1234', '1234xyz'));
+      dmp.Match_Distance=10;
+ 
     var that = this;
-    wxparse.wxParse('wxParseData','html', dmp.diff_prettyHtml(diff),that,5);
+    var rslt = '<div>' + dmp.diff_prettyHtml(diff) + '</div>';
+    wxparse.wxParse('wxParseData', 'html', rslt ,that,5);
    
    // WxParse.wxParse('originalValue', 'html', dmp.diff_prettyHtml(diff), that);
-   //console.log(dmp.diff_prettyHtml(diff));
+  // console.log(dmp.diff_prettyHtml(diff));
   },
   /**
    * 生命周期函数--监听页面卸载

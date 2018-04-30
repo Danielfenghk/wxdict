@@ -97,7 +97,7 @@ function html2json(html, bindName) {
             }
 
             if (block[tag]) {
-                node.tagType = "block";
+              node.tagType = "inline";
             } else if (inline[tag]) {
                 node.tagType = "inline";
             } else if (closeSelf[tag]) {
