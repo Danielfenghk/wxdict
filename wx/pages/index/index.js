@@ -1,7 +1,7 @@
 import DataService from '../../datas/DataService';
 import { LEVEL } from '../../datas/Config';
 import {
-  promiseHandle, log, formatNumber, formatTime1, rpxIntoPx
+  promiseHandle, log, formatNumber, formatTime1, formatTime,rpxIntoPx
 } from '../../utils/util';
 const backgroundAudioManager = wx.getBackgroundAudioManager();
 
@@ -12,6 +12,7 @@ Page({
     pickerDateValue: '',
     todoInputValue: '',
     todoTextAreaValue: '',
+    saveMsg:'',
 
     poster: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
     name: '此时此刻',
@@ -301,6 +302,8 @@ Page({
     let day = date.getDate(); //当月的天
     let month = date.getMonth() + 1; //月份，从0开始
     let year = date.getFullYear(); //年份
+    let dictdate= formatTime(date);
+    
 
     const { todoInputValue, todoTextAreaValue} = this.data;
      console.log(todoInputValue);
@@ -310,9 +313,9 @@ Page({
         content: todoTextAreaValue,
         year: year,
         month: parseInt(month) - 1,
-        date: date
+        date: day
       }).save();
-     
+      this.setData({ saveMsg: ' Successfully saved at:'+ dictdate});
     } 
   },
 

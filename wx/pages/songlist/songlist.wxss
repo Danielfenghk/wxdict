@@ -3,3 +3,7 @@
 .bc_white {background: whitesmoke;}
 .bc_grey {background:white;}
 .bc_blue {background: blue;}
+.picker{
+    padding: 13px;
+    background-color: #FFFFFF;
+}

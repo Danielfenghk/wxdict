@@ -8,13 +8,23 @@ Page({
    */
   data: {
     src: '',
+    searchdate: '2016-09-01',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    let date = new Date();
+    let day = date.getDate(); //当月的天
+    let month = date.getMonth() + 1; //月份，从0开始
+    let year = date.getFullYear(); //年份
+    const dday = day < 10 ? '0' + day : day;
+    const dmonth = month < 10 ? '0' + month : month;
+
+    let datestr=''+year+'-'+dmonth+'-'+dday;
+    this.setData({ searchdate: datestr})
+
   },
 
   /**
@@ -56,6 +66,19 @@ Page({
     }
     backgroundAudioManager.src = this.data.src;
     backgroundAudioManager.play();
+  },
+
+  searchaudiourl: function(){
+
+  },
+  searchrecord: function(){
+
+  },
+  bindDateChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      searchdate: e.detail.value
+    })
   },
 
   /**

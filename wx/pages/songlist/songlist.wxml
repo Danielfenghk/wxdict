@@ -1,11 +1,25 @@
 <!--pages/songlist/songlist.wxml-->
 <view>
 
-<input placeholder="输入mp3网址" value="{{src}}"   bindinput="urlChangeEvent" />
+<input style="border: 1px dotted #cccccc; margin: 5px;" placeholder="输入mp3网址" value="{{src}}"   bindinput="urlChangeEvent" />
  <view class="flex-wrp" style="flex-direction:row;">
  <view class="flex-item bc_white"><button bindtap="clearurl">清除网址</button></view>
  <view class="flex-item bc_grey" ><button bindtap="playurl">播放选定</button></view>
-
-       
+     
   </view>
+
+  网页内查找音频
+  <input style="border: 1px dotted #cccccc; margin: 5px;" placeholder="输入包含mp3的网址" value="{{audiourl}}"   bindinput="weburlChangeEvent" />
+  
+  <view class="flex-item bc_white"><button bindtap="searchaudiourl"> 网页内查找音频</button></view>
+
+<view class="section">
+  <picker mode="date" value="{{searchdate}}" start="2015-09-01" end="2217-09-01" bindchange="bindDateChange">
+    <view class="picker">
+      请选择日期: {{searchdate}}
+    </view>
+  </picker>
+</view>
+
+   <view class="flex-item bc_grey" ><button bindtap="searchrecord">搜索指定日期记录</button></view>
  </view>
