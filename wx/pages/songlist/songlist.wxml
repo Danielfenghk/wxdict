@@ -22,4 +22,21 @@
 </view>
 
    <view class="flex-item bc_grey" ><button bindtap="searchrecord">搜索指定日期记录</button></view>
+   
+   
+     <block wx:for="{{itemList}}" wx:key="id">
+      <view class="item" bindtap="listItemClickEvent" data-id="{{item.dictid}}" bindlongpress="listItemLongTapEvent">
+            
+          <view class="content">
+            <text class="title">{{item.title}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+    
+      
+      
+   
+   
+   
  </view>

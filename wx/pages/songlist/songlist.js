@@ -9,6 +9,11 @@ Page({
   data: {
     src: '',
     searchdate: '2016-09-01',
+      // 事项列表
+    dictid:'',
+    itemList: [],
+    editItemList: [] //编辑勾选中的事项id
+    
   },
 
   /**
@@ -115,4 +120,13 @@ Page({
   onShareAppMessage: function () {
   
   }
-})
+});
+
+  /**
+ * 加载dictation列表数据
+ */
+function loadItemListData() {
+  let _this = this;
+  DataService.findByDate(searchdate).then((lists) => {
+    _this.setData({ itemList: lists || null });
+  });

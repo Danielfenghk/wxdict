@@ -1,7 +1,7 @@
 import DataService from '../../datas/DataService';
 import { LEVEL } from '../../datas/Config';
 import {
-  promiseHandle, log, formatNumber, formatTime1, formatTime,rpxIntoPx
+  promiseHandle, guid, log, formatNumber, formatTime1, formatTime,rpxIntoPx
 } from '../../utils/util';
 const backgroundAudioManager = wx.getBackgroundAudioManager();
 
@@ -35,10 +35,9 @@ Page({
     resumePause: '暂停',
     playStop: '播放',
     stopPlay: '停止',
+    dictid:'',
 
-    // 事项列表
-    itemList: [],
-    editItemList: [] //编辑勾选中的事项id
+  
   },
 
   onShow() {
@@ -305,15 +304,19 @@ Page({
     let dictdate= formatTime(date);
     
 
-    const { todoInputValue, todoTextAreaValue} = this.data;
+    const { todoInputValue, todoTextAreaValue,dictid} = this.data;
      console.log(todoInputValue);
+    if(!dictid){
+        dictid=guid();
+    }
     if (todoInputValue !== '') {
       let promise = new DataService({
         title: todoInputValue,
         content: todoTextAreaValue,
         year: year,
         month: parseInt(month) - 1,
-        date: day
+        date: day,
+        dictid:dictid,
       }).save();
       this.setData({ saveMsg: ' Successfully saved at:'+ dictdate});
     } 
@@ -322,17 +325,26 @@ Page({
   resetEvent(){
     this.setData({
       todoTextAreaValue: '',
+      todoInputValue: '',
+      saveMsg:''
+    });
+     this.setData({
+      todoTextAreaValue: '',
       todoInputValue: ''
+      saveMsg:''
     });
     this.setData({
       todoTextAreaValue: '',
       todoInputValue: ''
     });
   },
+  
+
 
 });
 
 
+}
 
 
 

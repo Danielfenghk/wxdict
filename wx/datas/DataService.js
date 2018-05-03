@@ -8,7 +8,7 @@ class DataSerivce {
 
   constructor(props) {
     props = props || {};
-    this.id = props['_id'] || 0;
+    this.dictid = props['dictid'] ||0;
     this.content = props['content'] || '';
     this.date = props['date'] || '';
     this.month = props['month'] || '';
@@ -26,25 +26,43 @@ class DataSerivce {
         content: this.content,
         year: this.year,
         month: this.month,
-        date: this.date,
-        addDate: new Date().getTime()
-      });
+        date: this.date,        
+        dictid:this.dictid
+        },this.month);
     }
   }
+  
+  /**
+   * update当前对象数据
+   */
+  update() {
+    if (this._checkProps()) {
+        
+      return DataRepository.updateData({
+         title: this.title,
+        content: this.content,
+        year: this.year,
+        month: this.month,
+        date: this.date,        
+        dictid:this.dictid
+      },this.month);
+    }
+  }
+  
 
   /**
    * 获取所有事项数据
    */
-  static findAll() {
-    return DataRepository.findAllData()
+  static findAll(key) {
+    return DataRepository.findAllData(key)
       .then(data => data.data ? data.data : []);
   }
 
   /**
    * 通过id获取事项
    */
-  static findById(id) {
-    return DataRepository.findBy(item => item['_id'] == id)
+  static findById(id,key) {
+    return DataRepository.findBy(item => item['dictid'] == id, key)
       .then(items => (items && items.length > 0) ? items[0] : null);
   }
 
@@ -52,14 +70,14 @@ class DataSerivce {
    * 根据id删除事项数据
    */
   delete() {
-    return DataRepository.removeData(this.id);
+    return DataRepository.removeData(this.dictid,this.month);
   }
 
   /**
    * 批量删除数据
    * @param {Array} ids 事项Id集合
    */
-  static deleteRange(ids) {
+  static deleteRange(ids,key) {
     return DataRepository.removeRange(ids);
   }
 
@@ -68,17 +86,17 @@ class DataSerivce {
    * @param {Date} date 日期对象
    * @returns {Array} 事项集合
    */
-  static findByDate(date) {
+  static findByDate(date,key) {
     if (!date) return [];
     return DataRepository.findBy(item => {
-      return item && item['date'] == date.getDate() &&
+     return item && item['date'] == date.getDate() &&
         item['month'] == date.getMonth() &&
         item['year'] == date.getFullYear();
-    }).then(data => data);
+    },key).then(data => data);
   }
 
   _checkProps() {
-    return this.title &&  this.date && this.year && this.month;
+    return this.title && this.date && this.year && this.month&& this.dictid;
   }
 }
 

@@ -8,13 +8,12 @@ class DataRepository {
    * @param {Object} 添加的数据
    * @returns {Promise} 
    */
-  static addData(data) {
+  static addData(data,key) {
     if (!data) return false;
-    data['_id'] = guid();
-    return DataRepository.findAllData().then(allData => {
+     return DataRepository.findAllData(key).then(allData => {
       allData = allData || [];
       allData.unshift(data);
-      wx.setStorage({ key: Config.ITEMS_SAVE_KEY, data: allData });
+      wx.setStorage({ key: key, data: allData });
     });
   }
 
@@ -23,16 +22,16 @@ class DataRepository {
    * @param {string} id 数据项idid
    * @returns {Promise}
    */
-  static removeData(id) {
-    return DataRepository.findAllData().then(data => {
+  static removeData(id,key) {
+    return DataRepository.findAllData(key).then(data => {
       if (!data) return;
       for (let idx = 0, len = data.length; idx < len; idx++) {
-        if (data[idx] && data[idx]['_id'] == id) {
+        if (data[idx] && data[idx]['dictid'] == id) {
           data.splice(idx, 1);
           break;
         }
       }
-      wx.setStorage({ key: Config.ITEMS_SAVE_KEY, data: data });
+      wx.setStorage({ key: key, data: data });
     });
   }
 
@@ -41,14 +40,14 @@ class DataRepository {
    * @param {Array} range id集合
    * @returns {Promise}
    */
-  static removeRange(range) {
+  static removeRange(range,key) {
     if (!range) return;
-    return DataRepository.findAllData().then(data => {
+    return DataRepository.findAllData(key).then(data => {
       if (!data) return;
       let indexs = [];
       for (let rIdx = 0, rLen = range.length; rIdx < rLen; rIdx++) {
         for (let idx = 0, len = data.length; idx < len; idx++) {
-          if (data[idx] && data[idx]['_id'] == range[rIdx]) {
+          if (data[idx] && data[idx]['dictid'] == range[rIdx]) {
             indexs.push(idx);
             break;
           }
@@ -60,7 +59,7 @@ class DataRepository {
         data.splice(item - tmpIdx, 1);
         tmpIdx++;
       });
-      wx.setStorage({ key: Config.ITEMS_SAVE_KEY, data: data });
+      wx.setStorage({ key: key, data: data });
     });
 
   }
@@ -70,17 +69,17 @@ class DataRepository {
    * @param {Object} data 数据
    * @returns {Promise} 
    */
-  static saveData(data) {
-    if (!data || !data['_id']) return false;
-    return DataRepository.findAllData().then(allData => {
+  static updateData(data,key) {
+    if (!data || !data['dictid']) return false;
+    return DataRepository.findAllData(key).then(allData => {
       if (!allData) return false;
       for (let idx = 0, len = allData.length; i < len; idx++) {
-        if (allData[idx] && allData[idx]['_id'] == data['_id']) {
+        if (allData[idx] && allData[idx]['dictid'] == data['dictid']) {
           allData[idx] = data;
           break;
         }
       }
-      wx.setStorage({ key: Config.ITEMS_SAVE_KEY, data: data });
+      wx.setStorage({ key: key, data: data });
     });
 
   }
@@ -89,8 +88,8 @@ class DataRepository {
    * 获取所有数据
    * @returns {Promise} Promise实例
    */
-  static findAllData() {
-    return promiseHandle(wx.getStorage, { key: Config.ITEMS_SAVE_KEY }).then(res => res.data ? res.data : []).catch(ex => {
+  static findAllData(key) {
+    return promiseHandle(wx.getStorage, { key: key }).then(res => res.data ? res.data : []).catch(ex => {
       log(ex);
     });
   }
@@ -100,8 +99,8 @@ class DataRepository {
    * @param {Function} 回调
    * @returns {Promise} Promise实例
    */
-  static findBy(predicate) {
-    return DataRepository.findAllData().then(data => {
+  static findBy(predicate,key) {
+    return DataRepository.findAllData(key).then(data => {
       if (data) {
         data = data.filter(item => predicate(item));
       }
