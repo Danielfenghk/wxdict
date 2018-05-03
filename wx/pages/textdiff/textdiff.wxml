@@ -6,10 +6,10 @@
   <view class="flex-item bc_gre"><button  bindtap="textCompare">比较</button></view>
 <view class="flex-wrp" style="display: flex; flex-direction:row; margin:5rpx">
 
-    <textarea placeholder="原文" style="border: 3px solid #cccccc; padding: 5px;"  value="{{originalValue}}" 
-  bindinput="orgChangeEvent"> </textarea>
+    <textarea placeholder="原文" maxlength="-1" style="border: 3px solid #cccccc;"  value="{{originalValue}}" bindblur="orgChangeEvent"
+  bindconfirm="orgChangeEvent"> </textarea>
 
-  <textarea placeholder="输入文" style="border: 3px solid #cccccc; padding: 5px;" value="{{dictValue}}" bindinput="dictChangeEvent"></textarea>
+  <textarea placeholder="输入文" maxlength="-1" style="border: 3px solid #cccccc; " value="{{dictValue}}" bindblur="dictChangeEvent"  bindconfirm="dictChangeEvent" ></textarea>
 
   </view>
 

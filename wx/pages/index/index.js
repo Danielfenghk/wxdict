@@ -324,6 +324,10 @@ Page({
       todoTextAreaValue: '',
       todoInputValue: ''
     });
+    this.setData({
+      todoTextAreaValue: '',
+      todoInputValue: ''
+    });
   },
 
 });

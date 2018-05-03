@@ -21,7 +21,7 @@
     <view class="flex-item bc_gre"><button  bindtap="textCmp">比较</button></view>
   
   </view>
-  <view class="flex-wrp" style="flex-direction:row;">
+  <view class="flex-wrp" style="{display: flex; flex-direction:row;">
    <view class="flex-item bc_grey"><button bindtap="audioBP1">断1</button></view>
     
     <view class="flex-item bc_white"><button bindtap="audioBP2">断2</button></view>
@@ -38,7 +38,7 @@
 
    <view  style="flex-direction:column;">
   <input placeholder="请输入记录标题" value="{{todoInputValue}}" style="padding:5px"  bindblur="todoInputChangeEvent" />
-  <textarea placeholder="请输入记录内容"  style="border: 3px solid #cccccc; padding: 5px;" value="{{todoTextAreaValue}}" bindconfirm="todoTextAreaChangeEvent"></textarea>
+  <textarea placeholder="请输入记录内容"  maxlength="-1" style="border: 3px solid #cccccc;" value="{{todoTextAreaValue}}" bindblur="todoTextAreaChangeEvent" bindconfirm="todoTextAreaChangeEvent"  ></textarea>
   </view>
 <view style="padding:5px" >{{saveMsg}}</view>
   <view class="footer">

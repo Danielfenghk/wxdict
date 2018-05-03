@@ -11,13 +11,6 @@
 
 	
 
-.show-date {
-  margin: 30rpx 0;
-  text-align: center;
-  font-size: 60rpx;
-  font-weight: lighter;
-  color: #e14848;
-}
 
 .flex {
 	display: flex;
