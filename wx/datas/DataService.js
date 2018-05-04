@@ -28,7 +28,7 @@ class DataSerivce {
         month: this.month,
         date: this.date,        
         dictid:this.dictid
-        },this.month);
+        },this.year);
     }
   }
   
@@ -45,7 +45,7 @@ class DataSerivce {
         month: this.month,
         date: this.date,        
         dictid:this.dictid
-      },this.month);
+      },this.year);
     }
   }
   
@@ -70,7 +70,7 @@ class DataSerivce {
    * 根据id删除事项数据
    */
   delete() {
-    return DataRepository.removeData(this.dictid,this.month);
+    return DataRepository.removeData(this.dictid,this.year);
   }
 
   /**

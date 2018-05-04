@@ -28,7 +28,9 @@ Page({
     const dmonth = month < 10 ? '0' + month : month;
 
     let datestr=''+year+'-'+dmonth+'-'+dday;
-    this.setData({ searchdate: datestr})
+   
+      
+    this.setData({ searchdate: datestr,})
 
   },
 
@@ -36,7 +38,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+  loadItemListData.call(this);
   },
 
   /**
@@ -85,6 +87,35 @@ Page({
       searchdate: e.detail.value
     })
   },
+  
+   // 事项列表项按动作事件
+  listItemClickEvent(e) {
+    const { dictid,year } = e.currentTarget.dataset;
+    let _this = this;
+  
+     const itemList = ['详情', '删除'];
+      promiseHandle(wx.showActionSheet, { itemList: itemList || null, itemColor: '#2E2E3B' })
+        .then((res) => {
+          if (!res.cancel) {
+            switch (itemList[res.tapIndex]) {
+              case '详情':
+                wx.navigateTo({ url: '../index/index?dictid=' + dictid +'&searchyear='+year});
+                break;
+              case '删除':
+                new DataService({ dictid: dictid,year: year, }).delete().then(() => {
+                  loadItemListData.call(_this);
+                });
+                break;
+            }
+          }
+        }).catch(() => {
+          //2017.9.9 添加取消事件处理
+          //官方文档：tip: wx.showActionSheet 点击取消或蒙层时，回调 fail, errMsg 为 "showActionSheet:fail cancel"；
+        });
+   
+  },
+
+ 
 
   /**
    * 生命周期函数--监听页面隐藏
@@ -126,6 +157,7 @@ Page({
  * 加载dictation列表数据
  */
 function loadItemListData() {
+  const { searchdate,} = this.data;
   let _this = this;
   DataService.findByDate(searchdate).then((lists) => {
     _this.setData({ itemList: lists || null });

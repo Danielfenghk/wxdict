@@ -36,6 +36,7 @@ Page({
     playStop: '播放',
     stopPlay: '停止',
     dictid:'',
+    searchyear:'',
 
   
   },
@@ -43,7 +44,7 @@ Page({
   onShow() {
     var app = getApp();
     var getsrc = app.globalData.src;
-    this.setData({ src: getsrc });
+    this.setData({ src: getsrc,dictid: options.dictid, searchyear:options.searchyear , });
 
     if (!backgroundAudioManager.paused || this.data.playing) {
       this.setData({ playing: true });
@@ -75,7 +76,9 @@ Page({
         duration,
         currentTime,
         progressWidth,
-        waiting: false
+        waiting: false,
+        dictid: options.dictid, 
+        searchyear:options.searchyear,
       });
 
       if (backgroundAudioManager.currentTime >= this.data.bp2) {
@@ -88,7 +91,9 @@ Page({
   },
 
   onReady() {
-  
+      if (!dictid && !searchyear){
+          loadItemListID.call(this);
+      }
   },
 
   /**
@@ -306,18 +311,30 @@ Page({
 
     const { todoInputValue, todoTextAreaValue,dictid} = this.data;
      console.log(todoInputValue);
-    if(!dictid){
-        dictid=guid();
-    }
+    
     if (todoInputValue !== '') {
-      let promise = new DataService({
-        title: todoInputValue,
-        content: todoTextAreaValue,
-        year: year,
-        month: parseInt(month) - 1,
-        date: day,
-        dictid:dictid,
-      }).save();
+        if (!dictid){
+             dictid=guid();
+            this.setData({ dictid: dictid });
+            let promise = new DataService({
+            title: todoInputValue,
+            content: todoTextAreaValue,
+            year: year,
+            month: parseInt(month) - 1,
+            date: day,
+            dictid:dictid,
+          }).save();
+            
+        } else{           
+            let promise = new DataService({
+            title: todoInputValue,
+            content: todoTextAreaValue,
+            year: year,
+            month: parseInt(month) - 1,
+            date: day,
+            dictid:dictid,
+          }).update();
+        }
       this.setData({ saveMsg: ' Successfully saved at:'+ dictdate});
     } 
   },
@@ -326,22 +343,31 @@ Page({
     this.setData({
       todoTextAreaValue: '',
       todoInputValue: '',
-      saveMsg:''
+      saveMsg:'',
+      dictid:''
     });
      this.setData({
       todoTextAreaValue: '',
-      todoInputValue: ''
-      saveMsg:''
+      todoInputValue: '',
+      saveMsg:'',
+      dictid:''
     });
-    this.setData({
-      todoTextAreaValue: '',
-      todoInputValue: ''
-    });
+    
   },
   
 
 
 });
+
+ /**
+ * 加载dictation列表数据
+ */
+function loadItemListID() {
+  const { searchyear,dictid} = this.data;
+  let _this = this;
+  DataService.findById(dictid,searchyear).then((lists) => {
+    _this.setData({ todoInputValue: lists || null, todoTextAreaValue:lists || null });
+  });
 
 
 }
