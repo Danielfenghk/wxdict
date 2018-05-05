@@ -92,6 +92,11 @@ Page({
     })
   },
   
+  delallrecord: function(){
+    wx.clearStorage();
+    loadItemListData.call(this);
+  },
+
    // 事项列表项按动作事件
   listItemClickEvent(e) {
     const { dictid,year } = e.currentTarget.dataset;
@@ -164,7 +169,7 @@ Page({
 function loadItemListData() {
    let { searchdate,} = this.data;
   let _this = this;
-  console.log(searchdate);
+  //console.log(searchdate);
   let date=new Date(searchdate);
   let sk=date.getFullYear();
   DataService.findByDate(date,sk).then((lists) => {
