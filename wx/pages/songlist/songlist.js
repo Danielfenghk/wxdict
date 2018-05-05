@@ -76,6 +76,8 @@ Page({
     {
       backgroundAudioManager.stop();
     }
+    var app = getApp();
+    app.globalData.src = this.data.src;
     backgroundAudioManager.src = this.data.src;
     backgroundAudioManager.play();
   },
@@ -91,12 +93,14 @@ Page({
       'http://download.putclub.com/newupdate/voanews5/new170918.mp3',
     ]
     this.setData({ src: itemchar[Math.floor(Math.random() * itemchar.length)] });
+    var app = getApp();
+    app.globalData.src = this.data.src;
   },
   searchrecord: function(){
     loadItemListData.call(this);
   },
   bindDateChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    //console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       searchdate: e.detail.value
     })
