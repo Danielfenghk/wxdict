@@ -14,9 +14,10 @@ Page({
     searchdate: '2016-09-01',
       // 事项列表
     dictid:'',
+    audiourl: '',
     itemList: [],
     editItemList: [] //编辑勾选中的事项id
-    
+  
   },
 
   /**
@@ -80,7 +81,16 @@ Page({
   },
 
   searchaudiourl: function(){
-
+   
+    let itemchar=[
+     'http://qiniuuwmp3.changba.com/762594318.mp3',
+      'https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=F157C08B-1B3C-4EDD-BC2FBCB1EFFCE184',    
+      'https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=0648FCC0-1605-41B5-BCDF76B1D357E077',
+      'https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=623C52F0-E0B4-426A-A31F3EE667E21B5A',
+      'https://n1audio.hjfile.cn/tlk/fb01f9ee46b24e9b9e8143b0776bef75.mp3',
+      'http://download.putclub.com/newupdate/voanews5/new170918.mp3',
+    ]
+    this.setData({ src: itemchar[Math.floor(Math.random() * itemchar.length)] });
   },
   searchrecord: function(){
     loadItemListData.call(this);

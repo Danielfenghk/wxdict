@@ -9,7 +9,7 @@
   </view>
 
   网页内查找音频
-  <input style="border: 1px dotted #cccccc; margin: 5px;" placeholder="输入包含mp3的网址" value="{{audiourl}}"   bindinput="weburlChangeEvent" />
+  <input style="border: 1px dotted #cccccc; margin: 5px;" placeholder="输入包含mp3的网址,开发中" value="{{audiourl}}"   bindinput="weburlChangeEvent" />
   
   <view class="flex-item bc_white"><button bindtap="searchaudiourl"> 网页内查找音频</button></view>
 
