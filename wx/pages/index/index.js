@@ -316,8 +316,6 @@ Page({
     let day = date.getDate(); //当月的天
     let month = date.getMonth() + 1; //月份，从0开始
     let year = date.getFullYear(); //年份
-    const dday = day < 10 ? '0' + day : day;
-    const dmonth = month < 10 ? '0' + month : month;
 
     let dictdate= formatTime(date);
     let { todoInputValue, todoTextAreaValue,dictid } = this.data;
@@ -334,8 +332,8 @@ Page({
             title: todoInputValue,
             content: todoTextAreaValue,
             year: year,
-            month: dmonth,
-            date:dday,
+            month: month,
+            date:day,
             dictid:dictid,
           }).update();            
         } else{  
@@ -347,8 +345,8 @@ Page({
             title: todoInputValue,
             content: todoTextAreaValue,
             year: year,
-            month: dmonth,
-            date: dday,
+            month: month,
+            date: day,
             dictid:dictid,
           }).save();
         };
@@ -377,12 +375,12 @@ Page({
  * 加载dictation列表数据
  */
 function loadItemListID() {
-  const { searchyear, dictid} = this.data;
+  let { searchyear, dictid} = this.data;
   let _this = this;
+  console.log('dictid=' + dictid + '&searchyear=' + searchyear);
   DataService.findById(dictid,searchyear).then((lists) => {
-    _this.setData({ todoInputValue: lists || null, todoTextAreaValue:lists || null });
+    //console.log(lists);
+    _this.setData({ todoInputValue: lists.title || '', todoTextAreaValue:lists.content || '' });
   });
 };
-
-
 

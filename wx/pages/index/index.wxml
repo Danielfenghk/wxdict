@@ -38,7 +38,7 @@
 
    <view  style="flex-direction:column;">
   <input placeholder="请输入记录标题" value="{{todoInputValue}}" style="padding:5px"  bindblur="todoInputChangeEvent" />
-  <textarea placeholder="请输入记录内容"  maxlength="-1" style="border: 3px solid #cccccc;" value="{{todoTextAreaValue}}" bindblur="todoTextAreaChangeEvent" bindconfirm="todoTextAreaChangeEvent"  ></textarea>
+  <textarea placeholder="请输入记录内容"  maxlength="-1" style="border: 3px solid #cccccc;" value="{{todoTextAreaValue}}" bindinput="todoTextAreaChangeEvent"  bindblur="todoTextAreaChangeEvent" bindconfirm="todoTextAreaChangeEvent"  ></textarea>
   </view>
 <view style="padding:5px" >{{saveMsg}}</view>
   <view class="footer">

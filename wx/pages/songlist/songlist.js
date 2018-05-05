@@ -83,7 +83,7 @@ Page({
 
   },
   searchrecord: function(){
-
+    loadItemListData.call(this);
   },
   bindDateChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -103,6 +103,7 @@ Page({
           if (!res.cancel) {
             switch (itemList[res.tapIndex]) {
               case '详情':
+                console.log('../index/index?dictid=' + dictid + '&searchyear=' + year);
                 wx.navigateTo({ url: '../index/index?dictid=' + dictid +'&searchyear='+year});
                 break;
               case '删除':
@@ -163,7 +164,11 @@ Page({
 function loadItemListData() {
    let { searchdate,} = this.data;
   let _this = this;
-  DataService.findByDate(searchdate).then((lists) => {
+  console.log(searchdate);
+  let date=new Date(searchdate);
+  let sk=date.getFullYear();
+  DataService.findByDate(date,sk).then((lists) => {
+    //console.log(lists);
     _this.setData({ itemList: lists || null });
   });
 };

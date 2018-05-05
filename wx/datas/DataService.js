@@ -88,11 +88,12 @@ class DataSerivce {
    */
   static findByDate(date,key) {
     if (!date) return [];
-    return DataRepository.findBy(item => {
-     return item && item['date'] == date.getDate() &&
-        item['month'] == date.getMonth() &&
-        item['year'] == date.getFullYear();
-    },''+key).then(data => data);
+   return DataRepository.findBy(item => {
+       return item && item['date'] == date.getDate() &&
+        item['month'] == (date.getMonth()+1) &&
+        item['year'] == date.getFullYear();    
+   }, '' + key).then(data => data);
+     
   }
 
   _checkProps() {
