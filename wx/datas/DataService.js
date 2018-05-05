@@ -28,7 +28,7 @@ class DataSerivce {
         month: this.month,
         date: this.date,        
         dictid:this.dictid
-        },this.year);
+        },''+this.year);
     }
   }
   
@@ -45,7 +45,7 @@ class DataSerivce {
         month: this.month,
         date: this.date,        
         dictid:this.dictid
-      },this.year);
+      },''+this.year);
     }
   }
   
@@ -70,7 +70,7 @@ class DataSerivce {
    * 根据id删除事项数据
    */
   delete() {
-    return DataRepository.removeData(this.dictid,this.year);
+    return DataRepository.removeData(this.dictid,''+this.year);
   }
 
   /**
@@ -92,7 +92,7 @@ class DataSerivce {
      return item && item['date'] == date.getDate() &&
         item['month'] == date.getMonth() &&
         item['year'] == date.getFullYear();
-    },key).then(data => data);
+    },''+key).then(data => data);
   }
 
   _checkProps() {

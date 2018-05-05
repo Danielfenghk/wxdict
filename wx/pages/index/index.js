@@ -1,5 +1,4 @@
 import DataService from '../../datas/DataService';
-import { LEVEL } from '../../datas/Config';
 import {
   promiseHandle, guid, log, formatNumber, formatTime1, formatTime,rpxIntoPx
 } from '../../utils/util';
@@ -13,7 +12,8 @@ Page({
     todoInputValue: '',
     todoTextAreaValue: '',
     saveMsg:'',
-
+    dictid: '',
+    searchyear: '',
     poster: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
     name: '此时此刻',
     author: '许巍',
@@ -35,16 +35,18 @@ Page({
     resumePause: '暂停',
     playStop: '播放',
     stopPlay: '停止',
-    dictid:'',
-    searchyear:'',
-
-  
+        
   },
 
-  onShow() {
+  onShow(options) {
     var app = getApp();
     var getsrc = app.globalData.src;
-    this.setData({ src: getsrc,dictid: options.dictid, searchyear:options.searchyear , });
+   
+     this.setData({
+      src: getsrc,
+     }); 
+     
+  
 
     if (!backgroundAudioManager.paused || this.data.playing) {
       this.setData({ playing: true });
@@ -54,11 +56,17 @@ Page({
     }
   },
 
-  onLoad() {
+  onLoad(options) {
     const that = this;
     var app = getApp();
     var getsrc = app.globalData.src;
     that.setData({ src: getsrc });
+    if (options.dictid && options.searchyear){
+    that.setData({
+      dictid: options.dictid,
+      searchyear:options.searchyear,
+    })
+    }
     // 音频播放进度控制
     backgroundAudioManager.onTimeUpdate(() => {
       that.duration = backgroundAudioManager.duration * 1000;
@@ -91,7 +99,9 @@ Page({
   },
 
   onReady() {
-      if (!dictid && !searchyear){
+   
+    const {dictid, searchyear}=this.data;
+      if (dictid && searchyear){
           loadItemListID.call(this);
       }
   },
@@ -306,37 +316,44 @@ Page({
     let day = date.getDate(); //当月的天
     let month = date.getMonth() + 1; //月份，从0开始
     let year = date.getFullYear(); //年份
-    let dictdate= formatTime(date);
-    
+    const dday = day < 10 ? '0' + day : day;
+    const dmonth = month < 10 ? '0' + month : month;
 
-    const { todoInputValue, todoTextAreaValue,dictid} = this.data;
+    let dictdate= formatTime(date);
+    let { todoInputValue, todoTextAreaValue,dictid } = this.data;
      console.log(todoInputValue);
     
-    if (todoInputValue !== '') {
-        if (!dictid){
-             dictid=guid();
-            this.setData({ dictid: dictid });
+    if (todoInputValue == '') {
+		return;
+	}
+      if (dictid){
+        console.log(todoTextAreaValue);
+        console.log('id: '+dictid);
+        
             let promise = new DataService({
             title: todoInputValue,
             content: todoTextAreaValue,
             year: year,
-            month: parseInt(month) - 1,
-            date: day,
+            month: dmonth,
+            date:dday,
+            dictid:dictid,
+          }).update();            
+        } else{  
+        console.log(todoTextAreaValue);
+        dictid = guid();  
+        console.log(dictid);
+        this.setData({ dictid: dictid });
+            let promise = new DataService({
+            title: todoInputValue,
+            content: todoTextAreaValue,
+            year: year,
+            month: dmonth,
+            date: dday,
             dictid:dictid,
           }).save();
-            
-        } else{           
-            let promise = new DataService({
-            title: todoInputValue,
-            content: todoTextAreaValue,
-            year: year,
-            month: parseInt(month) - 1,
-            date: day,
-            dictid:dictid,
-          }).update();
-        }
+        };
       this.setData({ saveMsg: ' Successfully saved at:'+ dictdate});
-    } 
+    
   },
 
   resetEvent(){
@@ -344,18 +361,15 @@ Page({
       todoTextAreaValue: '',
       todoInputValue: '',
       saveMsg:'',
-      dictid:''
+      dictid:'',
     });
      this.setData({
       todoTextAreaValue: '',
       todoInputValue: '',
       saveMsg:'',
-      dictid:''
-    });
-    
+      dictid:'',
+    });    
   },
-  
-
 
 });
 
@@ -363,14 +377,12 @@ Page({
  * 加载dictation列表数据
  */
 function loadItemListID() {
-  const { searchyear,dictid} = this.data;
+  const { searchyear, dictid} = this.data;
   let _this = this;
   DataService.findById(dictid,searchyear).then((lists) => {
     _this.setData({ todoInputValue: lists || null, todoTextAreaValue:lists || null });
   });
-
-
-}
+};
 
 
 

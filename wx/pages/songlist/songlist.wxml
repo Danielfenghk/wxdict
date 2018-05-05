@@ -31,8 +31,7 @@
              <text class="play-list__line">-</text>
              <text class="play-list__singer">{{item.year}} 年{{item.year}} 月{{item.year}}日 </text>                            
            </view>
-     
-      </view>
+    
     </block>
     </scroll-view>  
     

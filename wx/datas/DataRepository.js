@@ -10,10 +10,11 @@ class DataRepository {
    */
   static addData(data,key) {
     if (!data) return false;
-     return DataRepository.findAllData(key).then(allData => {
+     return DataRepository.findAllData(''+key).then(allData => {
       allData = allData || [];
+      console.log(allData);
       allData.unshift(data);
-      wx.setStorage({ key: key, data: allData });
+      wx.setStorage({ key: ''+key, data: allData });
     });
   }
 
@@ -23,7 +24,7 @@ class DataRepository {
    * @returns {Promise}
    */
   static removeData(id,key) {
-    return DataRepository.findAllData(key).then(data => {
+    return DataRepository.findAllData(''+key).then(data => {
       if (!data) return;
       for (let idx = 0, len = data.length; idx < len; idx++) {
         if (data[idx] && data[idx]['dictid'] == id) {
@@ -31,7 +32,7 @@ class DataRepository {
           break;
         }
       }
-      wx.setStorage({ key: key, data: data });
+      wx.setStorage({ key: ''+key, data: data });
     });
   }
 
@@ -42,7 +43,7 @@ class DataRepository {
    */
   static removeRange(range,key) {
     if (!range) return;
-    return DataRepository.findAllData(key).then(data => {
+    return DataRepository.findAllData(''+key).then(data => {
       if (!data) return;
       let indexs = [];
       for (let rIdx = 0, rLen = range.length; rIdx < rLen; rIdx++) {
@@ -59,7 +60,7 @@ class DataRepository {
         data.splice(item - tmpIdx, 1);
         tmpIdx++;
       });
-      wx.setStorage({ key: key, data: data });
+      wx.setStorage({ key: ''+key, data: data });
     });
 
   }
@@ -71,15 +72,15 @@ class DataRepository {
    */
   static updateData(data,key) {
     if (!data || !data['dictid']) return false;
-    return DataRepository.findAllData(key).then(allData => {
+    return DataRepository.findAllData(''+key).then(allData => {
       if (!allData) return false;
-      for (let idx = 0, len = allData.length; i < len; idx++) {
+      for (let idx = 0, len = allData.length; idx < len; idx++) {
         if (allData[idx] && allData[idx]['dictid'] == data['dictid']) {
           allData[idx] = data;
           break;
         }
       }
-      wx.setStorage({ key: key, data: data });
+      wx.setStorage({ key: '' + key, data: allData });
     });
 
   }
@@ -89,7 +90,7 @@ class DataRepository {
    * @returns {Promise} Promise实例
    */
   static findAllData(key) {
-    return promiseHandle(wx.getStorage, { key: key }).then(res => res.data ? res.data : []).catch(ex => {
+    return promiseHandle(wx.getStorage, { key: ''+key }).then(res => res.data ? res.data : []).catch(ex => {
       log(ex);
     });
   }
@@ -100,7 +101,7 @@ class DataRepository {
    * @returns {Promise} Promise实例
    */
   static findBy(predicate,key) {
-    return DataRepository.findAllData(key).then(data => {
+    return DataRepository.findAllData(''+key).then(data => {
       if (data) {
         data = data.filter(item => predicate(item));
       }

@@ -1,4 +1,7 @@
-// pages/songlist/songlist.js
+import DataService from '../../datas/DataService';
+import {
+  promiseHandle, guid, log, formatNumber, formatTime1, formatTime, rpxIntoPx
+} from '../../utils/util';
 const backgroundAudioManager = wx.getBackgroundAudioManager()
 
 Page({
@@ -38,6 +41,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
+    
   loadItemListData.call(this);
   },
 
@@ -51,7 +55,7 @@ Page({
     this.setData({ src: getsrc });
   },
   urlChangeEvent(e) {
-    const { value } = e.detail;
+    let { value } = e.detail;
     this.setData({ src: value });
     var app = getApp();
     app.globalData.src=this.data.src;
@@ -102,7 +106,7 @@ Page({
                 wx.navigateTo({ url: '../index/index?dictid=' + dictid +'&searchyear='+year});
                 break;
               case '删除':
-                new DataService({ dictid: dictid,year: year, }).delete().then(() => {
+                new DataService({ dictid: dictid,year: ''+year, }).delete().then(() => {
                   loadItemListData.call(_this);
                 });
                 break;
@@ -157,8 +161,9 @@ Page({
  * 加载dictation列表数据
  */
 function loadItemListData() {
-  const { searchdate,} = this.data;
+   let { searchdate,} = this.data;
   let _this = this;
   DataService.findByDate(searchdate).then((lists) => {
     _this.setData({ itemList: lists || null });
   });
+};
