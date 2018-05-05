@@ -3,6 +3,7 @@ import {
   promiseHandle, guid, log, formatNumber, formatTime1, formatTime,rpxIntoPx
 } from '../../utils/util';
 const backgroundAudioManager = wx.getBackgroundAudioManager();
+//const backgroundAudioManager = wx.createInnerAudioContext();
 
 Page({
   data: {
@@ -85,8 +86,7 @@ Page({
         currentTime,
         progressWidth,
         waiting: false,
-        dictid: options.dictid, 
-        searchyear:options.searchyear,
+        
       });
 
       if (backgroundAudioManager.currentTime >= this.data.bp2) {
@@ -222,9 +222,9 @@ Page({
     }
     else {
       
-      backgroundAudioManager.src = this.data.src;
-     let timeInMilliseconds = (Number(this.data.currentTime.split(':')[0]) * 60 + Number(this.data.currentTime.split(':')[1])) * 1000
      
+     let timeInMilliseconds = (Number(this.data.currentTime.split(':')[0]) * 60 + Number(this.data.currentTime.split(':')[1])) * 1000
+     backgroundAudioManager.src = this.data.src;
      wx.seekBackgroundAudio({
        position: timeInMilliseconds/1000,
        success: function () {
