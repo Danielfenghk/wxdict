@@ -36,12 +36,12 @@
 
 
 
-   <view  style="flex-direction:column;">
+   <view  class="input" style="flex-direction:column;">
   <input placeholder="请输入记录标题" value="{{todoInputValue}}" style="padding:5px"  bindblur="todoInputChangeEvent" />
-  <textarea placeholder="请输入记录内容"  maxlength="-1" style="border: 3px solid #cccccc;" value="{{todoTextAreaValue}}" bindinput="todoTextAreaChangeEvent"  bindblur="todoTextAreaChangeEvent" bindconfirm="todoTextAreaChangeEvent"  ></textarea>
+  <textarea placeholder="请输入记录内容"  maxlength="-1" focus style="border: 3px solid #cccccc;   height: 230px;" value="{{todoTextAreaValue}}" bindinput="todoTextAreaChangeEvent"  bindblur="todoTextAreaChangeEvent" bindconfirm="todoTextAreaChangeEvent"  ></textarea>
   </view>
 <view style="padding:5px" >{{saveMsg}}</view>
-  <view class="footer">
+  <view >
   <view class="flex-wrp" style="flex-direction:row;">
        <view class="flex-item bc_blue"><button  bindtap="resetEvent">重置</button></view>
     <view class="flex-item bc_gre"><button  bindtap="saveDataEvent">保存</button></view>

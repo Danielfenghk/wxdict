@@ -366,7 +366,12 @@ Page({
       todoInputValue: '',
       saveMsg:'',
       dictid:'',
-    });    
+    }); 
+     setTimeout(_ => {
+       this.setData({
+         todoTextAreaValue: ''
+       })
+     }, 300) ;
   },
 
 });
