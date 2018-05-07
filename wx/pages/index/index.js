@@ -1,20 +1,13 @@
-import DataService from '../../datas/DataService';
 import {
-  promiseHandle, guid, log, formatNumber, formatTime1, formatTime,rpxIntoPx
+   log, formatNumber, formatTime1, formatTime2,rpxIntoPx
 } from '../../utils/util';
 const backgroundAudioManager = wx.getBackgroundAudioManager();
 //const backgroundAudioManager = wx.createInnerAudioContext();
 
 Page({
   data: {
-    showMonth: {},
-    selectDateText: '',
-    pickerDateValue: '',
-    todoInputValue: '',
+
     todoTextAreaValue: '',
-    saveMsg:'',
-    dictid: '',
-    searchyear: '',
     poster: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
     name: '音乐',
     author: '作者',
@@ -37,8 +30,6 @@ Page({
     playStop: '播放',
     stopPlay: '停止',
     remainTimeText: '',
-    log: {},
-    completed: false,
     isRuning: false,
         
   },
@@ -66,13 +57,8 @@ Page({
     var app = getApp();
     var getsrc = app.globalData.src;
     that.setData({ src: getsrc });
-    if (options.dictid && options.searchyear){
-    that.setData({
-      dictid: options.dictid,
-      searchyear:options.searchyear,
-    })
-    }
-    // 音频播放进度控制
+   
+      // 音频播放进度控制
     backgroundAudioManager.onTimeUpdate(() => {
       that.duration = backgroundAudioManager.duration * 1000;
       that.currentTime = backgroundAudioManager.currentTime * 1000;
@@ -104,10 +90,6 @@ Page({
 
   onReady() {
    
-    const {dictid, searchyear}=this.data;
-      if (dictid && searchyear){
-          loadItemListID.call(this);
-      }
   },
 
   /**
@@ -295,17 +277,7 @@ Page({
     this.audio14(slider.detail.value);
   },
 
-    showUpdatePanelEvent() {
-    showUpdatePanel.call(this);
-  },
-
-  
-  // 事项标题文本框变化事件
-  todoInputChangeEvent(e) {
-    const { value } = e.detail;
-    this.setData({ todoInputValue: value });
-  },
-
+    
 
   //事项内容多行文本域变化事件
   todoTextAreaChangeEvent(e) {
@@ -314,84 +286,36 @@ Page({
   },
 
 
-  // 保存事项数据
-  saveDataEvent() {
-    let date = new Date();
-    let day = date.getDate(); //当月的天
-    let month = date.getMonth() + 1; //月份，从0开始
-    let year = date.getFullYear(); //年份
-
-    let dictdate= formatTime(date);
-    let { todoInputValue, todoTextAreaValue,dictid } = this.data;
-    // console.log(todoInputValue);
-    
-    if (todoInputValue == '') {
-		return;
-	}
-      if (dictid){
-       // console.log(todoTextAreaValue);
-       // console.log('id: '+dictid);
-        
-            let promise = new DataService({
-            title: todoInputValue,
-            content: todoTextAreaValue,
-            year: year,
-            month: month,
-            date:day,
-            dictid:dictid,
-          }).update();            
-        } else{  
-       // console.log(todoTextAreaValue);
-        dictid = guid();  
-       // console.log(dictid);
-        this.setData({ dictid: dictid });
-            let promise = new DataService({
-            title: todoInputValue,
-            content: todoTextAreaValue,
-            year: year,
-            month: month,
-            date: day,
-            dictid:dictid,
-          }).save();
-        };
-      this.setData({ saveMsg: ' Successfully saved at:'+ dictdate});
-    
-  },
-
   resetEvent(){
+    this.stopTimer();
     this.setData({
       todoTextAreaValue: '',
-      todoInputValue: '',
-      saveMsg:'',
-      dictid:'',
+      remainTimeText:'',
+      isRuning:false,
     });
      this.setData({
       todoTextAreaValue: '',
-      todoInputValue: '',
-      saveMsg:'',
-      dictid:'',
+      remainTimeText: '',
     }); 
      setTimeout(_ => {
        this.setData({
          todoTextAreaValue: ''
        })
      }, 300) ;
+    
   },
   
   startTimer: function(e) {
     let startTime = Date.now()
     let isRuning = this.data.isRuning
-    let showTime = this.data[timerType + 'Time']
-    let keepTime = showTime * 60 * 1000
-
 
     if (!isRuning) {
       this.timer = setInterval((function() {
       let now = Date.now()
       let remainingTime = Math.round((now-startTime) / 1000)
-      let H = util.formatTime(Math.floor(remainingTime / (60 * 60)) % 24, 'HH')
-      let M = util.formatTime(Math.floor(remainingTime / (60)) % 60, 'MM')
-      let S = util.formatTime(Math.floor(remainingTime) % 60, 'SS')
+      let H = formatTime2(Math.floor(remainingTime / (60 * 60)) % 24, 'HH')
+      let M = formatTime2(Math.floor(remainingTime / (60)) % 60, 'MM')
+      let S = formatTime2(Math.floor(remainingTime) % 60, 'SS')
       let remainTimeText = (H === "00" ? "" : (H + ":")) + M + ":" + S
       this.setData({
         remainTimeText: remainTimeText
@@ -403,8 +327,7 @@ Page({
 
     this.setData({
       isRuning: !isRuning,
-      completed: false,
-    
+        
     })
 
   
@@ -414,21 +337,7 @@ Page({
       // clear timer
     this.timer && clearInterval(this.timer);
   },
-  
-  
+ 
 
 });
-
- /**
- * 加载dictation列表数据
- */
-function loadItemListID() {
-  let { searchyear, dictid} = this.data;
-  let _this = this;
- // console.log('dictid=' + dictid + '&searchyear=' + searchyear);
-  DataService.findById(dictid,searchyear).then((lists) => {
-    //console.log(lists);
-    _this.setData({ todoInputValue: lists.title || '', todoTextAreaValue:lists.content || '' });
-  });
-};
 

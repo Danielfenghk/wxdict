@@ -21,16 +21,6 @@ function getDateStr(date) {
   return date.getFullYear() + '年' + (date.getMonth() + 1) + '月' + date.getDate() + '日';
 }
 
-/**
- * 生成GUID序列号
- * @returns {string} GUID
- */
-function guid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
-}
 
 /**
  * 记录日志
@@ -51,6 +41,7 @@ const formatDate = (date, format) => {
     date = new Date();
   }
 };
+
 const formatTime1 = (time, showHour) => {
   const h = time.getUTCHours();
   const m = time.getUTCMinutes();
@@ -61,25 +52,18 @@ const formatTime1 = (time, showHour) => {
     return [m, s].map(formatNumber).join(':');
   }
 };
+
+function formatTime2(time, format) {
+  let temp = '0000000000' + time
+  let len = format.length
+  return temp.substr(-len)
+};
+
 const rpxIntoPx = unit => {
   const res = wx.getSystemInfoSync();
   return unit * res.windowWidth / 750
 };
-/**
- * @param {Function} func 接口
- * @param {Object} options 接口参数
- * @returns {Promise} Promise对象
-*/
-function promiseHandle(func, options) {
-  options = options || {};
-  return new Promise((resolve, reject) => {
-    if (typeof func !== 'function')
-      reject();
-    options.success = resolve;
-    options.fail = reject;
-    func(options);
-  });
-};
+
 function isFunction( obj ) {
   return typeof obj === 'function';
 };
@@ -88,11 +72,10 @@ module.exports = {
   formatTime: formatTime,
   formatDate,
   formatTime1,
+  formatTime2,
   rpxIntoPx,
-  guid: guid,
   log: log,
   isFunction: isFunction,
-  promiseHandle: promiseHandle,
   getDateStr: getDateStr,
   formatNumber: formatNumber
 }

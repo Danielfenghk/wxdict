@@ -18,7 +18,7 @@
        <view class="flex-item bc_blue"><button type="primary" bindtap="selectaudio">管理</button></view>
     <view class="flex-item bc_grey" ><button bindtap="audioPlay">{{playing? stopPlay :playStop}}</button></view>
      <view class="flex-item bc_white"><button bindtap="audioPause">{{playing? resumePause :pauseResume}}</button></view>
-    <view class="flex-item bc_gre"><button  bindtap="textCmp">比较</button></view>
+    <view class="flex-item bc_gre"><button  bindtap="startTimer">计时</button></view>
   
   </view>
   <view class="flex-wrp" style="{display: flex; flex-direction:row;">
@@ -37,16 +37,16 @@
 
 
    <view  class="input" style="flex-direction:column;">
-  <input placeholder="请输入记录标题" value="{{todoInputValue}}" style="padding:5px"  bindblur="todoInputChangeEvent" />
+
   <textarea placeholder="请输入记录内容"  maxlength="-1" focus style="border: 3px solid #cccccc;   height: 230px;" value="{{todoTextAreaValue}}" bindinput="todoTextAreaChangeEvent"  bindblur="todoTextAreaChangeEvent" bindconfirm="todoTextAreaChangeEvent"  ></textarea>
   </view>
 
 <view style="padding:5px" >{{remainTimeText}}</view>
-<view style="padding:5px" >{{saveMsg}}</view>
+
   <view >
   <view class="flex-wrp" style="flex-direction:row;">
        <view class="flex-item bc_blue"><button  bindtap="resetEvent">重置</button></view>
-    <view class="flex-item bc_gre"><button  bindtap="saveDataEvent">保存</button></view>
+        <view class="flex-item bc_gre"><button  bindtap="textCmp">比较</button></view>
   
   </view>
 

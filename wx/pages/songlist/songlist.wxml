@@ -14,25 +14,12 @@
   <view class="flex-item bc_white"><button bindtap="searchaudiourl"> 网页内查找音频</button></view>
 
 
-<view>
-  <picker mode="date" value="{{searchdate}}" start="2015-09-01" end="2217-09-01" bindchange="bindDateChange">
-    <view class="picker">
-      请选择日期: {{searchdate}}
-    </view>
-  </picker>
-</view>
- <view class="flex-wrp" style="flex-direction:row;">
-  <view class="flex-item bc_white"> <button bindtap="searchrecord">查日期记录</button> </view>
-   <view class="flex-item bc_white"><button bindtap="delallrecord">删所有记录</button> </view>
-   </view>
-    
+   
    
    <scroll-view scroll-y="true">   
-      <block wx:for="{{itemList}}" wx:key="dictid">
-           <view  bindtap="listItemClickEvent" data-dictid="{{item.dictid}}" data-year="{{item.year}}">
-             <text class='title' >{{item.title}}</text>
-             <text lass="line" >-</text>
-             <text class="date" >{{item.year}} 年{{item.month}} 月{{item.date}}日 </text>                            
+      <block wx:for="{{searchresult}}" wx:key="*this"  >
+           <view  bindtap="listItemClickEvent" data-src="{{item}}">
+             <text class='title' >{{item}}</text>                           
            </view>
     
     </block>
