@@ -29,7 +29,7 @@ Page({
     resumePause: '暂停',
     playStop: '播放',
     stopPlay: '停止',
-    remainTimeText: '',
+    remainTimeText: '00:00',
     isRuning: false,
         
   },
@@ -171,7 +171,8 @@ Page({
   },
 
   textCmp: function(){
-    wx.navigateTo({ url: '../textdiff/textdiff?dictv=' + this.data.todoTextAreaValue });
+    //console.log('../textdiff/textdiff?dictv=' + this.data.todoTextAreaValue + '?duration=' + this.data.duration + '?remainTimeText=' + this.data.remainTimeText)
+    wx.navigateTo({ url: '../textdiff/textdiff?dictv=' + this.data.todoTextAreaValue + '&duration=' + this.data.duration + '&remainTimeText=' + this.data.remainTimeText });
   },
 
   audioPlay: function () {
