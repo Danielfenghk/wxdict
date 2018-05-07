@@ -249,7 +249,7 @@ function request(url, data, successCb, errorCb, completeCb) {
             if (res.statusCode == 200) {
                 isFunction(successCb) && successCb(res.data);
             }else
-               // console.log('请求异常', res);
+               console.log('请求异常', res);
         },
         error: function() {
             isFunction(errorCb) && errorCb();

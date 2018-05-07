@@ -4,7 +4,7 @@ let wxparse = require("../../wxParse/wxParse.js")
 
 import {
   diff_match_patch
-} from '../../utils/diff_match_patch_uncompressed'
+} from '../../utils/diff_match_patch'
 Page({
 
   /**

@@ -1,4 +1,3 @@
-import Config from 'Config';
 import { guid, log, promiseHandle } from '../utils/util';
 
 class DataRepository {
