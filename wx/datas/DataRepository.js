@@ -12,7 +12,7 @@ class DataRepository {
     if (!data) return false;
      return DataRepository.findAllData(''+key).then(allData => {
       allData = allData || [];
-      console.log(allData);
+    //  console.log(allData);
       allData.unshift(data);
       wx.setStorage({ key: ''+key, data: allData });
     });
@@ -91,7 +91,7 @@ class DataRepository {
    */
   static findAllData(key) {
     return promiseHandle(wx.getStorage, { key: ''+key }).then(res => res.data ? res.data : []).catch(ex => {
-      log(ex);
+      //log(ex);
     });
   }
 

@@ -40,7 +40,7 @@ App({
   },
   //自定义配置
   settings: {
-    debug: true, //是否调试模式
+    debug: false, //是否调试模式
     //moreLink: 'https://github.com/oopsguy'
     
   }

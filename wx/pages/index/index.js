@@ -16,13 +16,13 @@ Page({
     dictid: '',
     searchyear: '',
     poster: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
-    name: '此时此刻',
-    author: '许巍',
+    name: '音乐',
+    author: '作者',
     src: '',
 
-    title: '此时此刻',
-    epname: '此时此刻',
-    singer: '许巍',
+    title: '音乐',
+    epname: '音乐',
+    singer: '歌手',
     coverImgUrl: 'http://y.gtimg.cn/music/photo_new/T002R300x300M000003rsKF44GyaSk.jpg?max_age=2592000',
     currentTime: '00:00',
     duration: '00:00',
@@ -36,6 +36,10 @@ Page({
     resumePause: '暂停',
     playStop: '播放',
     stopPlay: '停止',
+    remainTimeText: '',
+    log: {},
+    completed: false,
+    isRuning: false,
         
   },
 
@@ -163,7 +167,7 @@ Page({
     });
    
     this.currentTime = progressWidth * this.duration / 100 || 0;
-    console.log(this.currentTime);
+    //console.log(this.currentTime);
     backgroundAudioManager.seek(this.currentTime / 1000);
   },
   /**
@@ -246,11 +250,11 @@ Page({
 
   audioBP1: function () {
     this.setData({ bp1:backgroundAudioManager.currentTime });
-    console.log(this.data.bp1);
+    //console.log(this.data.bp1);
   },
   audioBP2: function () {
     this.setData({ bp2: backgroundAudioManager.currentTime });
-    console.log(this.data.bp2);
+    //console.log(this.data.bp2);
   },
 
   audioRepeat: function () {
@@ -319,14 +323,14 @@ Page({
 
     let dictdate= formatTime(date);
     let { todoInputValue, todoTextAreaValue,dictid } = this.data;
-     console.log(todoInputValue);
+    // console.log(todoInputValue);
     
     if (todoInputValue == '') {
 		return;
 	}
       if (dictid){
-        console.log(todoTextAreaValue);
-        console.log('id: '+dictid);
+       // console.log(todoTextAreaValue);
+       // console.log('id: '+dictid);
         
             let promise = new DataService({
             title: todoInputValue,
@@ -337,9 +341,9 @@ Page({
             dictid:dictid,
           }).update();            
         } else{  
-        console.log(todoTextAreaValue);
+       // console.log(todoTextAreaValue);
         dictid = guid();  
-        console.log(dictid);
+       // console.log(dictid);
         this.setData({ dictid: dictid });
             let promise = new DataService({
             title: todoInputValue,
@@ -373,6 +377,45 @@ Page({
        })
      }, 300) ;
   },
+  
+  startTimer: function(e) {
+    let startTime = Date.now()
+    let isRuning = this.data.isRuning
+    let showTime = this.data[timerType + 'Time']
+    let keepTime = showTime * 60 * 1000
+
+
+    if (!isRuning) {
+      this.timer = setInterval((function() {
+      let now = Date.now()
+      let remainingTime = Math.round((now-startTime) / 1000)
+      let H = util.formatTime(Math.floor(remainingTime / (60 * 60)) % 24, 'HH')
+      let M = util.formatTime(Math.floor(remainingTime / (60)) % 60, 'MM')
+      let S = util.formatTime(Math.floor(remainingTime) % 60, 'SS')
+      let remainTimeText = (H === "00" ? "" : (H + ":")) + M + ":" + S
+      this.setData({
+        remainTimeText: remainTimeText
+      })
+      }).bind(this), 1000)
+    } else {
+      this.stopTimer()
+    }
+
+    this.setData({
+      isRuning: !isRuning,
+      completed: false,
+    
+    })
+
+  
+  },
+  
+  stopTimer: function() {
+      // clear timer
+    this.timer && clearInterval(this.timer);
+  },
+  
+  
 
 });
 
@@ -382,7 +425,7 @@ Page({
 function loadItemListID() {
   let { searchyear, dictid} = this.data;
   let _this = this;
-  console.log('dictid=' + dictid + '&searchyear=' + searchyear);
+ // console.log('dictid=' + dictid + '&searchyear=' + searchyear);
   DataService.findById(dictid,searchyear).then((lists) => {
     //console.log(lists);
     _this.setData({ todoInputValue: lists.title || '', todoTextAreaValue:lists.content || '' });

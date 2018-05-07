@@ -1,6 +1,6 @@
 import DataService from '../../datas/DataService';
 import {
-  promiseHandle, guid, log, formatNumber, formatTime1, formatTime, rpxIntoPx
+  promiseHandle, isFunction
 } from '../../utils/util';
 const backgroundAudioManager = wx.getBackgroundAudioManager()
 
@@ -81,24 +81,49 @@ Page({
     backgroundAudioManager.src = this.data.src;
     backgroundAudioManager.play();
   },
+  
+  weburlChangeEvent(e){
+    let { value } = e.detail;
+    this.setData({ audiourl: value });
+  },
+ 
 
   searchaudiourl: function(){
-   
-    let itemchar=[
-     'http://qiniuuwmp3.changba.com/762594318.mp3',
-      'https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=F157C08B-1B3C-4EDD-BC2FBCB1EFFCE184',    
-      'https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=0648FCC0-1605-41B5-BCDF76B1D357E077',
-      'https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=623C52F0-E0B4-426A-A31F3EE667E21B5A',
-      'https://n1audio.hjfile.cn/tlk/fb01f9ee46b24e9b9e8143b0776bef75.mp3',
-      'http://download.putclub.com/newupdate/voanews5/new170918.mp3',
-      'http://k5.kekenet.com/Sound/2018/05/voacs0505_0455461hmP.mp3',
-      'https://n1audio.hjfile.cn/tlk/891b78abb7fd47b8b3d6d89a03c1496d.mp3',
-      'https://n1audio.hjfile.cn/tlk/9c77e6c6837e4d669ad2394898d6a7fb.mp3',
-      'https://n1audio.hjfile.cn/tlk/34b2abb855bc4fd5b5c6b558603606db.mp3',
-    ]
-    this.setData({ src: itemchar[Math.floor(Math.random() * itemchar.length)] });
-    var app = getApp();
-    app.globalData.src = this.data.src;
+      var _this = this;
+      let searchword=this.data.audiourl;
+      if (searchword) {  
+          request (searchword,'', (data) => {
+            let resultaudio=searchaudio(data);
+            if (resultaudio.length>0) {      
+              _this.setData({ src: resultaudio[0]});
+               var app = getApp();
+              app.globalData.src = this.data.src;
+            } else {
+             _this.setData({ audiourl: ''});
+            }
+          }, () => {
+            _this.setData({ audiourl: ''});
+          }, () => {
+            _this.setData({ audiourl: ''});
+          });
+    
+      }else{
+        let itemchar=[
+         'http://qiniuuwmp3.changba.com/762594318.mp3',
+          'https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=F157C08B-1B3C-4EDD-BC2FBCB1EFFCE184',    
+          'https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=0648FCC0-1605-41B5-BCDF76B1D357E077',
+          'https://flex.acast.com/www.scientificamerican.com/podcast/podcast.mp3?fileId=623C52F0-E0B4-426A-A31F3EE667E21B5A',
+          'https://n1audio.hjfile.cn/tlk/fb01f9ee46b24e9b9e8143b0776bef75.mp3',
+          'http://download.putclub.com/newupdate/voanews5/new170918.mp3',
+          'http://k5.kekenet.com/Sound/2018/05/voacs0505_0455461hmP.mp3',
+          'https://n1audio.hjfile.cn/tlk/891b78abb7fd47b8b3d6d89a03c1496d.mp3',
+          'https://n1audio.hjfile.cn/tlk/9c77e6c6837e4d669ad2394898d6a7fb.mp3',
+          'https://n1audio.hjfile.cn/tlk/34b2abb855bc4fd5b5c6b558603606db.mp3',
+          ]
+            this.setData({ src: itemchar[Math.floor(Math.random() * itemchar.length)] });
+            var app = getApp();
+            app.globalData.src = this.data.src;
+      }
   },
   searchrecord: function(){
     loadItemListData.call(this);
@@ -126,7 +151,7 @@ Page({
           if (!res.cancel) {
             switch (itemList[res.tapIndex]) {
               case '详情':
-                console.log('../index/index?dictid=' + dictid + '&searchyear=' + year);
+                //console.log('../index/index?dictid=' + dictid + '&searchyear=' + year);
                 wx.navigateTo({ url: '../index/index?dictid=' + dictid +'&searchyear='+year});
                 break;
               case '删除':
@@ -194,4 +219,43 @@ function loadItemListData() {
     //console.log(lists);
     _this.setData({ itemList: lists || null });
   });
+};
+
+function searchaudio (data){
+    
+    var urlRegex = /https?:\/\/[a-zA-Z0-9./?=_-]+(\.mp3|\.m4a|\.aac|\.wav)[a-zA-Z0-9./?=_-]*/img;
+   // let text= eval('`'+data+'`');
+    let text=`${data}`;
+    let list=text.match(urlRegex)||[];
+    list = list.filter(function (x, i, a) { 
+         return a.indexOf(x) == i; 
+    });
+    return list;
+};
+
+
+/**
+ * 网路请求
+ */
+function request(url, data, successCb, errorCb, completeCb) {
+    wx.request({
+        url: url,
+        method: 'GET',
+        header: {
+           'content-type': 'application/x-www-form-urlencoded'
+        },
+        data: data,
+        success: function(res) {
+            if (res.statusCode == 200) {
+                isFunction(successCb) && successCb(res.data);
+            }else
+               // console.log('请求异常', res);
+        },
+        error: function() {
+            isFunction(errorCb) && errorCb();
+        },
+        complete: function() {
+            isFunction(completeCb) && completeCb();
+        }
+    });
 };

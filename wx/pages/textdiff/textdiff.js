@@ -1,5 +1,5 @@
 // pages/textdiff/textdiff.js
-//require('../../utils/diff_match_patch_uncompressed.js')
+//require('../../utils/diff_match_patch.js')
 let wxparse = require("../../wxParse/wxParse.js")
 
 import {

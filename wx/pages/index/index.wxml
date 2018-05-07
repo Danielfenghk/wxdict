@@ -40,6 +40,8 @@
   <input placeholder="请输入记录标题" value="{{todoInputValue}}" style="padding:5px"  bindblur="todoInputChangeEvent" />
   <textarea placeholder="请输入记录内容"  maxlength="-1" focus style="border: 3px solid #cccccc;   height: 230px;" value="{{todoTextAreaValue}}" bindinput="todoTextAreaChangeEvent"  bindblur="todoTextAreaChangeEvent" bindconfirm="todoTextAreaChangeEvent"  ></textarea>
   </view>
+
+<view style="padding:5px" >{{remainTimeText}}</view>
 <view style="padding:5px" >{{saveMsg}}</view>
   <view >
   <view class="flex-wrp" style="flex-direction:row;">

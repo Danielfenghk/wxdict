@@ -79,7 +79,10 @@ function promiseHandle(func, options) {
     options.fail = reject;
     func(options);
   });
-}
+};
+function isFunction( obj ) {
+  return typeof obj === 'function';
+};
 
 module.exports = {
   formatTime: formatTime,
@@ -88,6 +91,7 @@ module.exports = {
   rpxIntoPx,
   guid: guid,
   log: log,
+  isFunction: isFunction,
   promiseHandle: promiseHandle,
   getDateStr: getDateStr,
   formatNumber: formatNumber

@@ -10,10 +10,11 @@
 
   网页内查找音频
   <input style="border: 1px dotted #cccccc; margin: 5px;" placeholder="输入包含mp3的网址,开发中" value="{{audiourl}}"   bindinput="weburlChangeEvent" />
-  
+        
   <view class="flex-item bc_white"><button bindtap="searchaudiourl"> 网页内查找音频</button></view>
 
-<view class="section">
+
+<view>
   <picker mode="date" value="{{searchdate}}" start="2015-09-01" end="2217-09-01" bindchange="bindDateChange">
     <view class="picker">
       请选择日期: {{searchdate}}
