@@ -14,6 +14,8 @@ Page({
     originalValue:'',
     dictValue:'',
     wxParseData:'',
+     duration: '00:00',
+    remainTimeText: '00:00',
   },
 
   /**
@@ -22,6 +24,8 @@ Page({
   onLoad: function (options) {
     this.setData({
       dictValue: options.dictv,
+      remainTimeText: options.remainTimeText,
+      duration: options.duration,
       })
   },
 

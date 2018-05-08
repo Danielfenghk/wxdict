@@ -61,6 +61,13 @@ const formatTime1 = (time, showHour) => {
     return [m, s].map(formatNumber).join(':');
   }
 };
+
+function formatTime2(time, format) {
+  let temp = '0000000000' + time
+  let len = format.length
+  return temp.substr(-len)
+};
+
 const rpxIntoPx = unit => {
   const res = wx.getSystemInfoSync();
   return unit * res.windowWidth / 750
@@ -88,6 +95,7 @@ module.exports = {
   formatTime: formatTime,
   formatDate,
   formatTime1,
+  formatTime2,
   rpxIntoPx,
   guid: guid,
   log: log,

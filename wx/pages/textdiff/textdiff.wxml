@@ -12,7 +12,7 @@
   <textarea placeholder="输入文"  maxlength="-1" style="border: 3px solid #cccccc; height: 230px;" value="{{dictValue}}" bindblur="dictChangeEvent"  bindconfirm="dictChangeEvent" ></textarea>
 
   </view>
-
+<view> 耗时：{{remainTimeText}} 时长：{{duration}}</view>
 
 <view class="wxParse">
 <template is="wxParse" data="{{wxParseData:wxParseData.nodes}}"/>

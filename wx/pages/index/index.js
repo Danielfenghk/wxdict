@@ -1,6 +1,6 @@
 import DataService from '../../datas/DataService';
 import {
-  promiseHandle, guid, log, formatNumber, formatTime1, formatTime,rpxIntoPx
+  promiseHandle, guid, log, formatNumber, formatTime1,formatTime2， formatTime,rpxIntoPx
 } from '../../utils/util';
 const backgroundAudioManager = wx.getBackgroundAudioManager();
 //const backgroundAudioManager = wx.createInnerAudioContext();
@@ -9,7 +9,6 @@ Page({
   data: {
     showMonth: {},
     selectDateText: '',
-    pickerDateValue: '',
     todoInputValue: '',
     todoTextAreaValue: '',
     saveMsg:'',
@@ -36,9 +35,7 @@ Page({
     resumePause: '暂停',
     playStop: '播放',
     stopPlay: '停止',
-    remainTimeText: '',
-    log: {},
-    completed: false,
+    remainTimeText: '00:00',
     isRuning: false,
         
   },
@@ -189,7 +186,8 @@ Page({
   },
 
   textCmp: function(){
-    wx.navigateTo({ url: '../textdiff/textdiff?dictv=' + this.data.todoTextAreaValue });
+   // wx.navigateTo({ url: '../textdiff/textdiff?dictv=' + this.data.todoTextAreaValue });
+    wx.navigateTo({ url: '../textdiff/textdiff?dictv=' + this.data.todoTextAreaValue + '&duration=' + this.data.duration + '&remainTimeText=' + this.data.remainTimeText });
   },
 
   audioPlay: function () {
@@ -359,15 +357,18 @@ Page({
   },
 
   resetEvent(){
+       this.stopTimer();
     this.setData({
       todoTextAreaValue: '',
       todoInputValue: '',
+      remainTimeText:'',
       saveMsg:'',
       dictid:'',
     });
      this.setData({
       todoTextAreaValue: '',
       todoInputValue: '',
+      remainTimeText:'',
       saveMsg:'',
       dictid:'',
     }); 
@@ -381,8 +382,6 @@ Page({
   startTimer: function(e) {
     let startTime = Date.now()
     let isRuning = this.data.isRuning
-    let showTime = this.data[timerType + 'Time']
-    let keepTime = showTime * 60 * 1000
 
 
     if (!isRuning) {
@@ -403,7 +402,6 @@ Page({
 
     this.setData({
       isRuning: !isRuning,
-      completed: false,
     
     })
 

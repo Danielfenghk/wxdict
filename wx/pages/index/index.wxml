@@ -47,6 +47,7 @@
   <view class="flex-wrp" style="flex-direction:row;">
        <view class="flex-item bc_blue"><button  bindtap="resetEvent">重置</button></view>
     <view class="flex-item bc_gre"><button  bindtap="saveDataEvent">保存</button></view>
+    <view class="flex-item bc_gre"><button  bindtap="startTimer">计时</button></view>
   
   </view>
 
